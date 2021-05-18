@@ -2,6 +2,11 @@ pipeline {
   agent any
   environment {
      NOMBRE = "alberto"
+     MAQUINA = """${sh(
+           returnStdout: true,
+           script: 'uname -n'
+          )
+          }"""
   }
   stages {
     stage('compilar') {
@@ -26,6 +31,13 @@ pipeline {
       steps{
         echo "Y aquí  ejecuto PARAM "
         sh 'java Param ${NOMBRE}'
+      }
+    }
+    stage('nombreMaquina'){
+      steps{
+        echo "Y aquí visualizeo el nombre de la maquina "
+        sh 'javac Maquina.java'
+        sh 'java Maquina ${MAQUINA}'
       }
     }
   }
